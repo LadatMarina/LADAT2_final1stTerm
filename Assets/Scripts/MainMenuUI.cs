@@ -16,11 +16,25 @@ public class MainMenuUI : MonoBehaviour
 
     private void Awake()
     {
-        playButton.onClick.AddListener(() => {Loader.Load(Loader.Scene.Game);});
-        howToPlayButton.onClick.AddListener(ShowHowToPlayPanel);
-        quitButton.onClick.AddListener(Application.Quit);
+        playButton.onClick.AddListener(() => {
+            SoundManager.PlaySound(SoundManager.Sound.ButtonClick);
+            Loader.Load(Loader.Scene.Game);
+        });
+        howToPlayButton.onClick.AddListener(() =>
+        {
+            SoundManager.PlaySound(SoundManager.Sound.ButtonClick);
+            ShowHowToPlayPanel();
+        });
         
-        quitHowToPlayPanelButton.onClick.AddListener(HideHowToPlayPanel);
+        quitButton.onClick.AddListener(()=> { 
+            SoundManager.PlaySound(SoundManager.Sound.ButtonClick); 
+            Application.Quit(); 
+        });
+        
+        quitHowToPlayPanelButton.onClick.AddListener(()=> { 
+            SoundManager.PlaySound(SoundManager.Sound.ButtonClick); 
+            HideHowToPlayPanel(); 
+        });
         
         HideHowToPlayPanel();
         

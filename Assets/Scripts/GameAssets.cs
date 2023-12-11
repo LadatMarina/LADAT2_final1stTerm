@@ -21,6 +21,7 @@ public class GameAssets : MonoBehaviour
 
     public GameObject[] arrowsArray;
     public GameObject arrowParent;
+    public GameObject winnerPanel;
 
     private void Awake()
     {
@@ -31,5 +32,6 @@ public class GameAssets : MonoBehaviour
         }
 
         Instance = this;
+        winnerPanel.gameObject.SetActive(false); //inicialitze winner panel
     }
 }

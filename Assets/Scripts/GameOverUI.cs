@@ -22,7 +22,10 @@ public class GameOverUI : MonoBehaviour
 
         Instance = this;
         
-        restartButton.onClick.AddListener(() => {Loader.Load(Loader.Scene.Game);});
+        restartButton.onClick.AddListener(() => {
+            Loader.Load(Loader.Scene.Game);
+            SoundManager.PlaySound(SoundManager.Sound.ButtonClick);
+        });
 
         Hide();
     }

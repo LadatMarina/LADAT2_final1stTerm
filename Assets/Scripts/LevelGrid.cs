@@ -29,6 +29,8 @@ public class LevelGrid
             Object.Destroy(foodGameObject);
             SpawnFood();
             Score.AddScore(Score.POINTS);
+            //POSAR ALGO DE IUUUPUUUUIIIII
+            Score.TrySetNewHighScore();
             return true;
         }
         else

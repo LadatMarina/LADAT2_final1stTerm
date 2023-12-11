@@ -11,11 +11,14 @@ public static class SoundManager
         SnakeDie,
         SnakeEat,
         SnakeMove,
-        WrongDirection
+        WrongDirection,
+        BeepSound,
+        NewHighScoreSound,
+        WinnerSound
     }
 
     private static GameObject soundManagerGameObject;
-    private static AudioSource audioSource;
+    public static AudioSource audioSource;
 
     public static void CreateSoundManagerGameObject()
     {
@@ -23,6 +26,7 @@ public static class SoundManager
         {
             soundManagerGameObject = new GameObject("Sound Manager");
             audioSource = soundManagerGameObject.AddComponent<AudioSource>();
+            
         }
         else
         {
@@ -46,5 +50,15 @@ public static class SoundManager
         }
         Debug.LogError("Sound " + sound + " not found");
         return null;
+    }
+
+    public static int SaveinitialPitch()
+    {
+        return (int)audioSource.pitch;
+    }
+
+    public static void ModifyPitch(float pitch)
+    {
+        audioSource.pitch = pitch;
     }
 }

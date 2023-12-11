@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
         GameAssets.Instance.arrowParent.transform.SetParent(snakeHeadGameObject.transform);
         HidePossibledirections();
         isPaused = false;
+
+
     }
 
     private void Update()
@@ -57,16 +59,27 @@ public class GameManager : MonoBehaviour
         {
             if (isPaused)
             {
+                SoundManager.PlaySound(SoundManager.Sound.ButtonClick);
                 ResumeGame();
             }
             else
             {
+                SoundManager.PlaySound(SoundManager.Sound.ButtonClick);
                 PauseGame();
             }
         }
+        //shortcut for win
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            snake.ChangeState(2);
+        }
+        //shortcut for loose
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            snake.ChangeState(1);
+        }
 
-
-        if(Input.GetKeyDown(KeyCode.U)) {
+        if (Input.GetKeyDown(KeyCode.U)) {
 
             GameAssets.Instance.arrowsArray[3].gameObject.SetActive(true);
             Debug.Log("estic pitjant sa tecla que activa sa fletxa UP");
@@ -93,6 +106,7 @@ public class GameManager : MonoBehaviour
     public void SnakeDied()
     {
         GameOverUI.Instance.Show(Score.TrySetNewHighScore());
+        SoundManager.PlaySound(SoundManager.Sound.SnakeDie);
     }
 
     public void PauseGame()
@@ -114,7 +128,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale *= 0.5f;
 
-        Debug.Log("no pot anar cap a"+ wrongDirection + "  index:" +(int)wrongDirection);
+        Debug.Log("no pot anar cap a "+ wrongDirection + "  index:" +(int)wrongDirection);
 
         for (int i = 0; i < GameAssets.Instance.arrowsArray.Length; i++)
         {
@@ -141,5 +155,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void Winner()
+    {
+        GameAssets.Instance.winnerPanel.SetActive(true);
+        SoundManager.PlaySound(SoundManager.Sound.WinnerSound);
+    }
     
 }

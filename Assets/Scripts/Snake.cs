@@ -14,7 +14,8 @@ public class Snake : MonoBehaviour
     private enum State
     {
         Alive,
-        Dead
+        Dead,
+        Winner
     }
     
     # region VARIABLES
@@ -69,6 +70,9 @@ public class Snake : MonoBehaviour
                 HandleGridMovement();
                 break;
             case State.Dead:
+                break;
+            case State.Winner:
+                GameManager.Instance.Winner();
                 break;
         }
     }
@@ -126,6 +130,7 @@ public class Snake : MonoBehaviour
                 // El cuerpo crece
                 snakeBodySize++;
                 CreateBodyPart();
+                SoundManager.PlaySound(SoundManager.Sound.SnakeEat);
             }
             
             if (snakeMovePositionsList.Count > snakeBodySize)
@@ -133,7 +138,10 @@ public class Snake : MonoBehaviour
                 snakeMovePositionsList.
                     RemoveAt(snakeMovePositionsList.Count - 1);
             }
-            
+            if(snakeMovePositionsList.Count > 80)
+            {
+                state = State.Winner;
+            }
             // Comprobamos el Game Over aquí porque tenemos la posición de la cabeza y la lista snakeMovePositionsList actualizadas para poder comprobar la muerte
             foreach (SnakeMovePosition movePosition in snakeMovePositionsList)
             {
@@ -299,6 +307,7 @@ public class Snake : MonoBehaviour
         canMove = false;
         RandomDirection(gridMoveDirection);
         GameManager.Instance.ShowPossibleDirections(wrongDirection);
+        SoundManager.PlaySound(SoundManager.Sound.WrongDirection);
     }
 
     private void RandomDirection(Direction gridMoveDir) 
@@ -320,6 +329,10 @@ public class Snake : MonoBehaviour
             }
             Debug.Log("THE SNAKE HAS TAKEN A RANDOM DIRECTION  " + gridMoveDir);
         }
-        
+    }
+
+    public void ChangeState(int n)
+    {
+        state = (State)n;
     }
 }

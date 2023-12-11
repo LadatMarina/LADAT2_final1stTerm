@@ -9,6 +9,7 @@ public static class Score
     public static event EventHandler OnHighScoreChange;
     public delegate void OnScoreChangeDelagate(int score);
     public static event OnScoreChangeDelagate OnScoreChange;
+    private static bool newHighScoreHaveSounded;
 
     private static int score; // Puntuación del jugador
 
@@ -30,7 +31,11 @@ public static class Score
             {
                 OnHighScoreChange(null, EventArgs.Empty);
             }
-            
+            if (newHighScoreHaveSounded == false)
+            {
+                SoundManager.PlaySound(SoundManager.Sound.NewHighScoreSound);
+                newHighScoreHaveSounded = true;
+            }
             return true;
         }
         
@@ -42,6 +47,8 @@ public static class Score
         OnHighScoreChange?.Invoke(null, EventArgs.Empty);
         score = 0;
         AddScore(0);
+        
+        newHighScoreHaveSounded = false;
     }
     
     public static int GetScore()
