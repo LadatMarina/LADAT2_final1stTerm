@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -38,6 +39,9 @@ public class GameManager : MonoBehaviour
         // Inicializo tema score
         Score.InitializeStaticScore();
 
+        //parent arrows to snakehead
+        //GameAssets.Instance.arrowParent.transform.SetParent(snakeHeadGameObject.transform);
+        HidePossibledirections();
         isPaused = false;
     }
 
@@ -60,6 +64,27 @@ public class GameManager : MonoBehaviour
                 PauseGame();
             }
         }
+
+
+        if(Input.GetKeyDown(KeyCode.U)) {
+
+            GameAssets.Instance.arrowsArray[3].gameObject.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+
+            GameAssets.Instance.arrowsArray[2].gameObject.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+
+            GameAssets.Instance.arrowsArray[0].gameObject.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+
+            GameAssets.Instance.arrowsArray[1].gameObject.SetActive(true);
+        }
     }
 
     public void SnakeDied()
@@ -80,4 +105,38 @@ public class GameManager : MonoBehaviour
         PauseUI.Instance.Hide();
         isPaused = false;
     }
+
+    //if the index of my direction doesen't match, show all the arrow (this show all the arrows minus my direction)
+    public void ShowPossibleDirections(Direction gridMoveDir)
+    {
+        Time.timeScale *= 0.5f;
+
+        Debug.Log((int)gridMoveDir);
+
+        for (int i = 0; i < GameAssets.Instance.arrowsArray.Length; i++)
+        {
+            Debug.Log(i);
+
+            if (i != (int)gridMoveDir)
+            {
+                GameAssets.Instance.arrowsArray[i].gameObject.SetActive(true); //NO ME FA ES SET ACTIVE, SA LÒGIA DELS INDEX SI QUE FUNCIONA
+                Debug.Log(i + $"arrow{gridMoveDir} showed");
+
+            }
+        }
+    }
+
+    public void HidePossibledirections()
+    {
+        foreach (GameObject go in GameAssets.Instance.arrowsArray)
+        {
+            if (go != null)
+            {
+                go.SetActive(false);
+            }
+        }
+        Time.timeScale = 1;
+    }
+
+    
 }

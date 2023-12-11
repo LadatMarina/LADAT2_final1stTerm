@@ -51,6 +51,8 @@ public class Snake : MonoBehaviour
         snakeBodyPartsList = new List<SnakeBodyPart>();
 
         state = State.Alive;
+
+        
     }
 
     private void Update()
@@ -142,6 +144,7 @@ public class Snake : MonoBehaviour
             canMove = true;
             transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridMoveDirectionVector));
             UpdateBodyParts();
+            GameManager.Instance.HidePossibledirections();
         }
     }
 
@@ -163,10 +166,7 @@ public class Snake : MonoBehaviour
                 }
                 else
                 {
-                    canMove = false;
-                    Debug.Log(gridMoveDirection.ToString() + "WRONG DIR");
-                    //OnWrongDir();
-                    //cridar evento de quan no pot anar a sa direcció chosen
+                    IsWrongDirection();
                 }
             }
 
@@ -183,11 +183,7 @@ public class Snake : MonoBehaviour
                 }
                 else
                 {
-                    canMove = false;
-                    Debug.Log(gridMoveDirection.ToString() + "WRONG DIR");
-
-                    //OnWrongDir();
-                    //gridMoveDirection = (Direction)Random.Range(0, 2);
+                    IsWrongDirection();
                 }
             }
 
@@ -201,11 +197,7 @@ public class Snake : MonoBehaviour
                 }
                 else
                 {
-                    canMove = false;
-                    Debug.Log(gridMoveDirection.ToString() + "WRONG DIR"); ;
-
-                    //OnWrongDir();
-                    //gridMoveDirection = (Direction)Random.Range(2, 4);
+                    IsWrongDirection();
                 }
 
 
@@ -222,10 +214,7 @@ public class Snake : MonoBehaviour
                 }
                 else
                 {
-                    canMove = false;
-                    Debug.Log(gridMoveDirection.ToString() + "WRONG DIR");
-                    //OnWrongDir();
-                    //gridMoveDirection = (Direction)Random.Range(2, 4);
+                    IsWrongDirection();
                 }
 
             }
@@ -268,6 +257,24 @@ public class Snake : MonoBehaviour
         for (int i = 0; i < snakeBodyPartsList.Count; i++)
         {
             snakeBodyPartsList[i].SetMovePosition(snakeMovePositionsList[i]);
+        }
+    }
+
+    private void IsWrongDirection() { 
+        canMove = false;
+        //RandomDirection(gridMoveDirection);
+        GameManager.Instance.ShowPossibleDirections(gridMoveDirection);
+    }
+
+    private void RandomDirection(Direction gridMoveDir) {
+
+        if((gridMoveDir == Direction.Right) || (gridMoveDir == Direction.Left))
+        {
+            gridMoveDir = (Direction)Random.Range(2, 4);
+        }
+        else if ((gridMoveDir == Direction.Up) || (gridMoveDir == Direction.Down))
+        {
+            gridMoveDir = (Direction)Random.Range(0, 2);
         }
     }
 }

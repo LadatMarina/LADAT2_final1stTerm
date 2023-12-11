@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 
 public class GameAssets : MonoBehaviour
@@ -17,6 +18,9 @@ public class GameAssets : MonoBehaviour
     public Sprite foodSprite;
 
     public SoundAudioClip[] soundAudioClipsArray;
+
+    public GameObject[] arrowsArray;
+    public GameObject arrowParent;
 
     private void Awake()
     {
