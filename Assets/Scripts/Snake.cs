@@ -35,6 +35,8 @@ public class Snake : MonoBehaviour
 
     private State state;
     public bool canMove = true;
+    private GameObject arrowParent;
+    private int timesOnWrongDir;
 
     #endregion
 
@@ -51,8 +53,11 @@ public class Snake : MonoBehaviour
         snakeBodyPartsList = new List<SnakeBodyPart>();
 
         state = State.Alive;
+    }
 
-        
+    private void Start()
+    {
+        arrowParent = GameAssets.Instance.arrowParent;
     }
 
     private void Update()
@@ -166,7 +171,27 @@ public class Snake : MonoBehaviour
                 }
                 else
                 {
-                    IsWrongDirection();
+                    IsWrongDirection(Direction.Down); 
+                    /*
+                     * canMove = false;
+                    //IsWrongDirection(Direction.Down);
+                    timesOnWrongDir++; //if the player have pressed 3 times a wrong direction, the snake will move to a random direction
+
+                    Debug.Log(timesOnWrongDir);
+
+                    if (timesOnWrongDir > 3)
+                    {
+                        timesOnWrongDir = 0;
+                        if ((gridMoveDirection == Direction.Right) || (gridMoveDirection == Direction.Left))
+                        {
+                            gridMoveDirection = (Direction)Random.Range(2, 4);
+                        }
+                        else if ((gridMoveDirection == Direction.Up) || (gridMoveDirection == Direction.Down))
+                        {
+                            gridMoveDirection = (Direction)Random.Range(0, 2);
+                        }
+                        Debug.Log("THE SNAKE HAS TAKEN A RANDOM DIRECTION  " + gridMoveDirection);
+                    }*/
                 }
             }
 
@@ -178,12 +203,14 @@ public class Snake : MonoBehaviour
                 if (gridMoveDirection != Direction.Up)
                 {
                     canMove = false;
+                    //gridMoveDirection = Direction.Down;
+                    //Changes(gridMoveDirection);
                     gridMoveDirection = Direction.Down;
-
                 }
                 else
                 {
-                    IsWrongDirection();
+                    
+                    //IsWrongDirection(Direction.Up);
                 }
             }
 
@@ -197,7 +224,7 @@ public class Snake : MonoBehaviour
                 }
                 else
                 {
-                    IsWrongDirection();
+                    IsWrongDirection(Direction.Left);
                 }
 
 
@@ -214,13 +241,21 @@ public class Snake : MonoBehaviour
                 }
                 else
                 {
-                    IsWrongDirection();
+                    //RandomDirection(gridMoveDirection);
+                    IsWrongDirection(Direction.Right);
                 }
 
             }
+            //Vector3 gridposition3D = new Vector3(gridPosition.x, gridPosition.y, 0);
+
+            //arrowParent.transform.position= Vector3.MoveTowards(arrowParent.transform.position, gridposition3D, 0.1f);
+            //    transform.position = Vector3.MoveTowards(transform.position, targ.transform.position, .03);
         }
     }
-
+    private void Changes(Direction gridMoveDirection)
+    {
+        gridMoveDirection = Direction.Down;
+    }
     private float GetAngleFromVector(Vector2Int direction)
     {
         float degrees = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -260,21 +295,31 @@ public class Snake : MonoBehaviour
         }
     }
 
-    private void IsWrongDirection() { 
+    private void IsWrongDirection(Direction wrongDirection) { 
         canMove = false;
-        //RandomDirection(gridMoveDirection);
-        GameManager.Instance.ShowPossibleDirections(gridMoveDirection);
+        RandomDirection(gridMoveDirection);
+        GameManager.Instance.ShowPossibleDirections(wrongDirection);
     }
 
-    private void RandomDirection(Direction gridMoveDir) {
+    private void RandomDirection(Direction gridMoveDir) 
+    {
+        timesOnWrongDir++; //if the player have pressed 3 times a wrong direction, the snake will move to a random direction
 
-        if((gridMoveDir == Direction.Right) || (gridMoveDir == Direction.Left))
+        Debug.Log(timesOnWrongDir);
+
+        if(timesOnWrongDir > 3)
         {
-            gridMoveDir = (Direction)Random.Range(2, 4);
+            timesOnWrongDir = 0;
+            if((gridMoveDir == Direction.Right) || (gridMoveDir == Direction.Left))
+            {
+                gridMoveDir = (Direction)Random.Range(2, 4);
+            }
+            else if ((gridMoveDir == Direction.Up) || (gridMoveDir == Direction.Down))
+            {
+                gridMoveDir = (Direction)Random.Range(0, 2);
+            }
+            Debug.Log("THE SNAKE HAS TAKEN A RANDOM DIRECTION  " + gridMoveDir);
         }
-        else if ((gridMoveDir == Direction.Up) || (gridMoveDir == Direction.Down))
-        {
-            gridMoveDir = (Direction)Random.Range(0, 2);
-        }
+        
     }
 }

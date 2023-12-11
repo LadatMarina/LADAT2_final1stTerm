@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         Score.InitializeStaticScore();
 
         //parent arrows to snakehead
-        //GameAssets.Instance.arrowParent.transform.SetParent(snakeHeadGameObject.transform);
+        GameAssets.Instance.arrowParent.transform.SetParent(snakeHeadGameObject.transform);
         HidePossibledirections();
         isPaused = false;
     }
@@ -69,19 +69,22 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.U)) {
 
             GameAssets.Instance.arrowsArray[3].gameObject.SetActive(true);
+            Debug.Log("estic pitjant sa tecla que activa sa fletxa UP");
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-
+            Debug.Log("estic pitjant sa tecla que activa sa fletxa DOWN");
             GameAssets.Instance.arrowsArray[2].gameObject.SetActive(true);
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-
             GameAssets.Instance.arrowsArray[0].gameObject.SetActive(true);
+            Debug.Log("estic pitjant sa tecla que activa sa fletxa LEFT");
+
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
+            Debug.Log("estic pitjant sa tecla que activa sa fletxa RIGHT");
 
             GameAssets.Instance.arrowsArray[1].gameObject.SetActive(true);
         }
@@ -107,20 +110,20 @@ public class GameManager : MonoBehaviour
     }
 
     //if the index of my direction doesen't match, show all the arrow (this show all the arrows minus my direction)
-    public void ShowPossibleDirections(Direction gridMoveDir)
+    public void ShowPossibleDirections(Direction wrongDirection)
     {
         Time.timeScale *= 0.5f;
 
-        Debug.Log((int)gridMoveDir);
+        Debug.Log("no pot anar cap a"+ wrongDirection + "  index:" +(int)wrongDirection);
 
         for (int i = 0; i < GameAssets.Instance.arrowsArray.Length; i++)
         {
-            Debug.Log(i);
+            //Debug.Log(i);
 
-            if (i != (int)gridMoveDir)
+            if (i != (int)wrongDirection)
             {
                 GameAssets.Instance.arrowsArray[i].gameObject.SetActive(true); //NO ME FA ES SET ACTIVE, SA LÒGIA DELS INDEX SI QUE FUNCIONA
-                Debug.Log(i + $"arrow{gridMoveDir} showed");
+                Debug.Log("mostra index: " + i +"  que es sa direccio:"+ (Direction)i );
 
             }
         }

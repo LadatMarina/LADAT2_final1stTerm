@@ -7,6 +7,8 @@ public static class Score
     public const int POINTS = 100; // Cantidad de puntos que ganamos al comer comida
 
     public static event EventHandler OnHighScoreChange;
+    public delegate void OnScoreChangeDelagate(int score);
+    public static event OnScoreChangeDelagate OnScoreChange;
 
     private static int score; // Puntuación del jugador
 
@@ -37,10 +39,9 @@ public static class Score
 
     public static void InitializeStaticScore()
     {
-        OnHighScoreChange = null;
+        OnHighScoreChange?.Invoke(null, EventArgs.Empty);
         score = 0;
         AddScore(0);
-        ScoreUI.Instance.UpdateHighScoreText();
     }
     
     public static int GetScore()
@@ -51,6 +52,6 @@ public static class Score
     public static void AddScore(int pointsToAdd)
     {
         score += pointsToAdd;
-        ScoreUI.Instance.UpdateScoreText(score);
+        OnScoreChange?.Invoke(score); //if it's not null, invoke it
     }
 }

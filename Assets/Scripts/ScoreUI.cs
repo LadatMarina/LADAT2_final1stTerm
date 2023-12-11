@@ -20,11 +20,13 @@ public class ScoreUI : MonoBehaviour
         
         // Suscribir un método al evento OnHighScoreChange
         Score.OnHighScoreChange += Score_OnHighScoreChange;
+        Score.OnScoreChange += UpdateScoreText;
     }
 
     private void OnDisable()
     {
         Score.OnHighScoreChange -= Score_OnHighScoreChange;
+        Score.OnScoreChange -= UpdateScoreText;
     }
 
     private void Score_OnHighScoreChange(object sender, EventArgs e)
