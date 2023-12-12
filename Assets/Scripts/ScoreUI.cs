@@ -33,7 +33,6 @@ public class ScoreUI : MonoBehaviour
     private void Score_OnHighScoreChange(object sender, EventArgs e)
     {
         UpdateHighScoreText();
-        //if(scoreText.text >0){SoundManager.PlaySound(SoundManager.Sound.NewHighScoreSound);}
     }
 
     public void UpdateHighScoreText()

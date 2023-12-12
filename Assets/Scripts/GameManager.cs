@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditor.ShortcutManagement;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -39,21 +40,12 @@ public class GameManager : MonoBehaviour
         // Inicializo tema score
         Score.InitializeStaticScore();
 
-        //parent arrows to snakehead
-        GameAssets.Instance.arrowParent.transform.SetParent(snakeHeadGameObject.transform);
         HidePossibledirections();
         isPaused = false;
-
-
     }
 
     private void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.R))
-        // {
-        //     Loader.Load(Loader.Scene.Game);
-        // }
-        
         // Lógica de Pause con tecla Escape
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -69,37 +61,19 @@ public class GameManager : MonoBehaviour
             }
         }
         //shortcut for win
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             snake.ChangeState(2);
         }
         //shortcut for loose
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             snake.ChangeState(1);
         }
-
-        if (Input.GetKeyDown(KeyCode.U)) {
-
-            GameAssets.Instance.arrowsArray[3].gameObject.SetActive(true);
-            Debug.Log("estic pitjant sa tecla que activa sa fletxa UP");
-        }
-        if (Input.GetKeyDown(KeyCode.D))
+        //shortcut for reset the hight score in the player prefs
+        if(Input.GetKeyUp(KeyCode.B))
         {
-            Debug.Log("estic pitjant sa tecla que activa sa fletxa DOWN");
-            GameAssets.Instance.arrowsArray[2].gameObject.SetActive(true);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            GameAssets.Instance.arrowsArray[0].gameObject.SetActive(true);
-            Debug.Log("estic pitjant sa tecla que activa sa fletxa LEFT");
-
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("estic pitjant sa tecla que activa sa fletxa RIGHT");
-
-            GameAssets.Instance.arrowsArray[1].gameObject.SetActive(true);
+            PlayerPrefs.DeleteKey(Score.HIGH_SCORE);
         }
     }
 
@@ -124,21 +98,17 @@ public class GameManager : MonoBehaviour
     }
 
     //if the index of my direction doesen't match, show all the arrow (this show all the arrows minus my direction)
-    public void ShowPossibleDirections(Direction wrongDirection)
+    public void ShowPossibleDirections(Direction wrongDirection,Vector2Int snakePos)
     {
         Time.timeScale *= 0.5f;
 
-        Debug.Log("no pot anar cap a "+ wrongDirection + "  index:" +(int)wrongDirection);
+        GameAssets.Instance.arrowParent.transform.position = (Vector3Int)snakePos;
 
         for (int i = 0; i < GameAssets.Instance.arrowsArray.Length; i++)
         {
-            //Debug.Log(i);
-
             if (i != (int)wrongDirection)
             {
                 GameAssets.Instance.arrowsArray[i].gameObject.SetActive(true); //NO ME FA ES SET ACTIVE, SA LÒGIA DELS INDEX SI QUE FUNCIONA
-                Debug.Log("mostra index: " + i +"  que es sa direccio:"+ (Direction)i );
-
             }
         }
     }
@@ -160,5 +130,4 @@ public class GameManager : MonoBehaviour
         GameAssets.Instance.winnerPanel.SetActive(true);
         SoundManager.PlaySound(SoundManager.Sound.WinnerSound);
     }
-    
 }

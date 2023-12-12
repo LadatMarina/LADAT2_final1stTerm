@@ -297,6 +297,7 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 08609a546eab69341883838b4d394e62, type: 3}
   arrowsArray: []
   arrowParent: {fileID: 0}
+  winnerPanel: {fileID: 1698159483}
 --- !u!4 &652359174
 Transform:
   m_ObjectHideFlags: 0

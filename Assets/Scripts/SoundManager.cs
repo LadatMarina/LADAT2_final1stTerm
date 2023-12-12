@@ -26,7 +26,6 @@ public static class SoundManager
         {
             soundManagerGameObject = new GameObject("Sound Manager");
             audioSource = soundManagerGameObject.AddComponent<AudioSource>();
-            
         }
         else
         {

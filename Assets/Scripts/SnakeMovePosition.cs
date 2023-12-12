@@ -33,5 +33,4 @@ public class SnakeMovePosition
         }
         return previousSnakeMovePosition.GetDirection();
     }
-
 }

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameAssets : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public class GameAssets : MonoBehaviour
         }
 
         Instance = this;
-        winnerPanel.gameObject.SetActive(false); //inicialitze winner panel
+        Scene actualScene = SceneManager.GetActiveScene();
+
+        if (actualScene.buildIndex == 1) //if the scene is the game scene;
+        {
+            winnerPanel.gameObject.SetActive(false); //inicialitze winner panel
+        }
     }
 }

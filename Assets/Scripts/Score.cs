@@ -38,7 +38,6 @@ public static class Score
             }
             return true;
         }
-        
         return false;
     }
 

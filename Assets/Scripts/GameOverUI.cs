@@ -46,14 +46,5 @@ public class GameOverUI : MonoBehaviour
         scoreText.text = "YOUR SCORE: " + Score.GetScore().ToString();
         highScoreText.text = hasNewHighScore ? "NEW HIGH SCORE: " + Score.GetHighScore().ToString() : "LAST HIGH SCORE: " + Score.GetHighScore().ToString();
         messsageText.text = hasNewHighScore ? "CONGRATULATIONS" : "DON'T WORRY, NEXT TIME";
-
-        // if (hasNewHighScore)
-        // {
-        //     messsageText.text = "CONGRATULATIONS";
-        // }
-        // else
-        // {
-        //     messsageText.text = "DON'T WORRY, NEXT TIME";
-        // }
     }
 }
